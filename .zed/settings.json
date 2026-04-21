@@ -1,0 +1,13 @@
+{
+  "languages": {
+    "Markdown": {
+      "formatter": {
+        "external": {
+          "command": "./bin/dprint",
+          "arguments": ["fmt", "--stdin", "md"]
+        }
+      },
+      "format_on_save": "on"
+    }
+  }
+}

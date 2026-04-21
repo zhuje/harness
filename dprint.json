@@ -1,0 +1,14 @@
+{
+  "markdown": {
+    "lineWidth": 150,
+    "textWrap": "always"
+  },
+  "excludes": [
+    "projects/console/**",
+    "projects/monitoring-plugin/**",
+    "projects/logging-view-plugin/**",
+    "projects/perses/**",
+    "projects/perses-operator/**"
+  ],
+  "plugins": ["https://plugins.dprint.dev/markdown-0.21.1.wasm"]
+}

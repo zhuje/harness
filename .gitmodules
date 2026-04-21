@@ -1,0 +1,15 @@
+[submodule "projects/monitoring-plugin"]
+	path = projects/monitoring-plugin
+	url = http://github.com/openshift/monitoring-plugin
+[submodule "projects/console"]
+	path = projects/console
+	url = http://github.com/openshift/console
+[submodule "projects/logging-view-plugin"]
+	path = projects/logging-view-plugin
+	url = http://github.com/openshift/logging-view-plugin
+[submodule "projects/perses"]
+	path = projects/perses
+	url = http://github.com/perses/perses
+[submodule "projects/perses-operator"]
+	path = projects/perses-operator
+	url = http://github.com/perses/perses-operator
