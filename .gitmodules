@@ -13,3 +13,9 @@
 [submodule "projects/perses-operator"]
 	path = projects/perses-operator
 	url = http://github.com/perses/perses-operator
+[submodule "projects/konflux-coo"]
+	path = projects/konflux-coo
+	url = https://github.com/rhobs/konflux-coo
+[submodule "projects/observability-operator"]
+	path = projects/observability-operator
+	url = https://github.com/rhobs/observability-operator
