@@ -41,10 +41,10 @@ $(DPRINT):
 	@chmod +x $(DPRINT)
 	@echo "Installed dprint -> $(DPRINT)"
 
-fmt-md: $(DPRINT)
+lint: $(DPRINT)
 	$(DPRINT) fmt
 
-check-md: $(DPRINT)
+check: $(DPRINT)
 	$(DPRINT) check
 
 clean:
