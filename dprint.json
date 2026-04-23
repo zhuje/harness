@@ -3,12 +3,11 @@
     "lineWidth": 150,
     "textWrap": "always"
   },
+  "includes": [
+    "**/*.md"
+  ],
   "excludes": [
-    "projects/console/**",
-    "projects/monitoring-plugin/**",
-    "projects/logging-view-plugin/**",
-    "projects/perses/**",
-    "projects/perses-operator/**"
+    "projects/**"
   ],
   "plugins": ["https://plugins.dprint.dev/markdown-0.21.1.wasm"]
 }

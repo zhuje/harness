@@ -16,7 +16,7 @@ giving agents direct access to source code.
 
 ## Projects
 
-See [projects/README.md](projects/README.md) for the full list of repositories in scope.
+See [PROJECTS.md](PROJECTS.md) for the full list of repositories in scope.
 
 ## Repository layout
 
