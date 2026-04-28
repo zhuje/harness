@@ -25,7 +25,7 @@ tasks/                  # Active tasks (description + work-plan + execution)
 completed/              # Archived completed tasks
 projects/               # Git submodules for all in-scope repos
 bin/                    # Local tooling (dprint)
-.claude/                # Claude Code agent configuration
+claude/plugins/obsui/   # Claude Code plugin for assisted development and code reviews
 ```
 
 ## Setup
