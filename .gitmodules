@@ -19,3 +19,12 @@
 [submodule "projects/observability-operator"]
 	path = projects/observability-operator
 	url = https://github.com/rhobs/observability-operator
+[submodule "projects/perses-shared"]
+	path = projects/perses-shared
+	url = http://github.com/perses/shared
+[submodule "projects/perses-plugins"]
+	path = projects/perses-plugins
+	url = http://github.com/perses/plugins
+[submodule "projects/perses-spec"]
+	path = projects/perses-spec
+	url = http://github.com/perses/spec

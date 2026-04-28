@@ -13,3 +13,6 @@
 - [perses](perses): An open-source project for creating and managing dashboards and visualizations for monitoring.
 - [perses-operator](perses-operator): An upstream open-source k8s operator that manages Perses resources, including perses backend instances,
   datasources, global datasource and dashboards.
+- [perses-plugins](perses-plugins): A collection of plugin modules for Perses, including datasources, panels and variables.
+- [perses-shared](perses-shared): A collection of shared libraries for Perses plugins, including plugin system, components, dashboards and utilities.
+- [perses-specs](perses-specs): A collection of CUE specifications for Perses resources, including dashboards, datasources and plugins.
