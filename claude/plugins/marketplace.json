@@ -1,0 +1,14 @@
+{
+  "name": "ai-sdlc",
+  "description": "AI-assisted SDLC plugins",
+  "plugins": [
+    {
+      "name": "obsui",
+      "description": "Development assistant for the observability UI team",
+      "source": {
+        "source": "git-subdir",
+        "path": "claude/plugins/obsui"
+      }
+    }
+  ]
+}

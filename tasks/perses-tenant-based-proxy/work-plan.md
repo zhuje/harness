@@ -7,7 +7,8 @@ The Perses datasource proxy uses static headers and query parameters defined at 
 values. Currently, there is no mechanism for dashboard variables to influence proxy request headers or query parameters — variables are only
 interpolated in PromQL queries and series name formats.
 
-**Upstream issue:** [perses/perses#3940 — Include custom parameters when proxying requests to datasources queries](https://github.com/perses/perses/issues/3940)
+**Upstream issue:**
+[perses/perses#3940 — Include custom parameters when proxying requests to datasources queries](https://github.com/perses/perses/issues/3940)
 
 ## Current State
 
@@ -374,8 +375,7 @@ The issue keeps `queryParams` at the **plugin spec level** (same level as `proxy
 }
 ```
 
-With `namespace` variable set to `["default", "other"]`, this produces:
-`POST .../api/v1/query_range?namespace=default&namespace=other`
+With `namespace` variable set to `["default", "other"]`, this produces: `POST .../api/v1/query_range?namespace=default&namespace=other`
 
 #### Two approaches for replication
 
@@ -392,15 +392,15 @@ export interface LokiDatasourceSpec {
 }
 ```
 
-Each plugin's query functions handle interpolation individually, using the same `interpolateQueryParams` helper
-(which could be moved to `@perses-dev/plugin-system` for sharing).
+Each plugin's query functions handle interpolation individually, using the same `interpolateQueryParams` helper (which could be moved to
+`@perses-dev/plugin-system` for sharing).
 
-| Pros | Cons |
-| --- | --- |
-| No shared model changes | Each plugin duplicates the field and wiring |
-| No Go proxy handler changes | CUE schemas diverge across plugins |
-| Simpler, fewer repos touched | No single place to configure queryParams |
-| Aligned with upstream proposal | |
+| Pros                           | Cons                                        |
+| ------------------------------ | ------------------------------------------- |
+| No shared model changes        | Each plugin duplicates the field and wiring |
+| No Go proxy handler changes    | CUE schemas diverge across plugins          |
+| Simpler, fewer repos touched   | No single place to configure queryParams    |
+| Aligned with upstream proposal |                                             |
 
 ##### Approach B: Shared queryParams in HTTPProxySpec
 
@@ -415,45 +415,45 @@ HTTPProxySpec:
   secret?: string
 ```
 
-| Pros | Cons |
-| --- | --- |
-| Consistent with `headers` pattern | Requires Go, CUE, TS changes across 2+ repos |
-| All plugins get it for free | Go proxy must handle queryParams server-side |
-| Single configuration location | Interaction between server-side and client-side interpolated params needs dedup |
-| | May not match upstream maintainers' direction |
+| Pros                              | Cons                                                                            |
+| --------------------------------- | ------------------------------------------------------------------------------- |
+| Consistent with `headers` pattern | Requires Go, CUE, TS changes across 2+ repos                                    |
+| All plugins get it for free       | Go proxy must handle queryParams server-side                                    |
+| Single configuration location     | Interaction between server-side and client-side interpolated params needs dedup |
+|                                   | May not match upstream maintainers' direction                                   |
 
 #### Where the HTTPProxy model lives (for Approach B)
 
-The `perses/spec` repo (`github.com/perses/spec`) does **not** contain HTTPProxy — it only has the outer wrapper types (`DatasourceSpec`,
-`Plugin`, `Display`). The HTTPProxy model is split across:
+The `perses/spec` repo (`github.com/perses/spec`) does **not** contain HTTPProxy — it only has the outer wrapper types (`DatasourceSpec`, `Plugin`,
+`Display`). The HTTPProxy model is split across:
 
-| Layer | Repository | File |
-| --- | --- | --- |
-| Go struct | `perses/perses` | `pkg/model/api/v1/datasource/http/http.go` |
-| Go proxy handler | `perses/perses` | `internal/api/impl/proxy/proxy.go` |
-| CUE schema | `perses/perses-shared` | `cue/common/proxy/http.cue` |
-| TypeScript types | `perses/perses` | `ui/core/src/model/http-proxy.ts` (via `@perses-dev/core`) |
+| Layer            | Repository             | File                                                       |
+| ---------------- | ---------------------- | ---------------------------------------------------------- |
+| Go struct        | `perses/perses`        | `pkg/model/api/v1/datasource/http/http.go`                 |
+| Go proxy handler | `perses/perses`        | `internal/api/impl/proxy/proxy.go`                         |
+| CUE schema       | `perses/perses-shared` | `cue/common/proxy/http.cue`                                |
+| TypeScript types | `perses/perses`        | `ui/core/src/model/http-proxy.ts` (via `@perses-dev/core`) |
 
 #### Recommendation
 
 **Start with Approach A** (aligned with issue #3940): keep `queryParams` at the plugin spec level, replicate to other plugins. This is simpler,
 doesn't require upstream model changes, and matches the direction proposed in the issue. Phase 1-2 already implements this for Prometheus.
 
-Approach B can be proposed as a follow-up if the community wants to consolidate — but the interpolation infrastructure built in Phase 1-2
-(the `interpolateQueryParams` helper, the per-call override pattern in the client) works with either approach.
+Approach B can be proposed as a follow-up if the community wants to consolidate — but the interpolation infrastructure built in Phase 1-2 (the
+`interpolateQueryParams` helper, the per-call override pattern in the client) works with either approach.
 
 #### Shared helpers (done)
 
-Generic helpers live in `@perses-dev/components` alongside other interpolation utilities (`variable-interpolation.ts`,
-`data-field-interpolation.ts`, `selection-interpolation.ts`):
+Generic helpers live in `@perses-dev/components` alongside other interpolation utilities (`variable-interpolation.ts`, `data-field-interpolation.ts`,
+`selection-interpolation.ts`):
 
-| File | Contents |
-| --- | --- |
+| File                                                          | Contents                                                                |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | `perses-shared/components/src/utils/request-interpolation.ts` | `interpolateHeaders`, `interpolateQueryParams`, `QueryParamValues` type |
-| `perses-shared/components/src/utils/index.ts` | Barrel re-export |
+| `perses-shared/components/src/utils/index.ts`                 | Barrel re-export                                                        |
 
-Plugins import directly from `@perses-dev/components`. The Prometheus plugin's `interpolation.ts` keeps only the
-Prometheus-specific `interpolateDatasourceProxyParams` and `resolvePrometheusDatasource`.
+Plugins import directly from `@perses-dev/components`. The Prometheus plugin's `interpolation.ts` keeps only the Prometheus-specific
+`interpolateDatasourceProxyParams` and `resolvePrometheusDatasource`.
 
 #### Remaining steps for replication (Approach A)
 
@@ -523,11 +523,11 @@ With `namespace = ["ns1", "ns2"]`, this produces `?namespace=ns1%2Cns2` (comma-s
 
 ## PR Strategy
 
-| PR # | Repository        | Branch | Description                                                               |
-| ---- | ----------------- | ------ | ------------------------------------------------------------------------- |
-| 1    | perses-plugins    | `main` | Support per-call queryParams and header/queryParam variable interpolation |
+| PR # | Repository        | Branch | Description                                                                |
+| ---- | ----------------- | ------ | -------------------------------------------------------------------------- |
+| 1    | perses-plugins    | `main` | Support per-call queryParams and header/queryParam variable interpolation  |
 | 2    | perses-plugins    | `main` | Replicate queryParams + interpolation to Loki, Tempo, ClickHouse (Phase 3) |
-| 3    | monitoring-plugin | `main` | Bump Perses deps, configure tenant headers                                |
+| 3    | monitoring-plugin | `main` | Bump Perses deps, configure tenant headers                                 |
 
 ## Verification
 

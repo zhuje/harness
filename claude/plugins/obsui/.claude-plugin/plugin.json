@@ -1,0 +1,13 @@
+{
+  "name": "obsui",
+  "description": "An assistant for the observability ui team",
+  "version": "0.1.0",
+  "author": {
+    "name": "Gabriel Bernal",
+    "email": "gbernal@redhat.com",
+    "url": "https://github.com/jgbernalp"
+  },
+  "repository": "https://github.com/observability-ui/harness/claude/plugins/obsui",
+  "license": "MIT",
+  "skills": "./skills/"
+}
