@@ -1,4 +1,4 @@
-# Task
+# Spec: Upgrade perses and perses operator forks for COO release 1.5.0
 
 ## Related projects and branches
 

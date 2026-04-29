@@ -24,7 +24,8 @@ gh pr view <PR_NUMBER> --json title,body,baseRefName,headRefName,commits,files,a
 gh pr diff <PR_NUMBER>
 ```
 
-Read the full contents of every file listed in the `files` array from the PR metadata. These file contents, together with the diff, form the review corpus.
+Read the full contents of every file listed in the `files` array from the PR metadata. These file contents, together with the diff, form the review
+corpus.
 
 Also read the following project config files if they exist (do not fail if missing):
 
@@ -35,7 +36,8 @@ Also read the following project config files if they exist (do not fail if missi
 
 ### 1b. LSP enrichment (optional)
 
-If LSP is available for the changed file types, gather structured context to include in the Opus lead agent's prompt. If LSP is unavailable for a file type, skip it — the review proceeds with text-based analysis only.
+If LSP is available for the changed file types, gather structured context to include in the Opus lead agent's prompt. If LSP is unavailable for a file
+type, skip it — the review proceeds with text-based analysis only.
 
 For each changed file, run these LSP operations on exported symbols that were modified, removed, or had signature changes:
 
@@ -59,7 +61,8 @@ Format the results as a `## LSP Context` section to include in the Opus lead pro
 - `processData` (processor.go:88) — called by: handleRequest, batchJob, cronTask
 ```
 
-If no LSP data is available, omit this section entirely. All agents must treat LSP context as supplementary — its absence does not change the review approach.
+If no LSP data is available, omit this section entirely. All agents must treat LSP context as supplementary — its absence does not change the review
+approach.
 
 ### 2. Two-phase review
 
@@ -82,28 +85,36 @@ If no LSP data is available, omit this section entirely. All agents must treat L
 
 #### 2a. Phase 1 — Lead review (Opus)
 
-Launch **1 agent** with `model: "opus"`. It receives the full PR context (title, description, commits, diff, full file contents, any relevant project conventions from config files read in Step 1, and the LSP Context section from Step 1b if available). It has a dual mandate:
+Launch **1 agent** with `model: "opus"`. It receives the full PR context (title, description, commits, diff, full file contents, any relevant project
+conventions from config files read in Step 1, and the LSP Context section from Step 1b if available). It has a dual mandate:
 
 **Mandate A — Bugs & Security findings:**
 
 Review the diff and full file context for correctness and security issues:
 
-- **Correctness:** logic errors, null/undefined dereferences, uninitialized variables, React hooks violations (rules of hooks, incorrect useEffect dependency arrays, state updates after unmount)
+- **Correctness:** logic errors, null/undefined dereferences, uninitialized variables, React hooks violations (rules of hooks, incorrect useEffect
+  dependency arrays, state updates after unmount)
 - **Type safety:** `any` abuse, unsafe type assertions (`as`), missing return types on exported functions, incorrect generics
-- **Resource management:** unclosed handles/connections, uncleared timers/intervals, orphaned subscriptions or listeners, unhandled promise rejections, swallowed errors
+- **Resource management:** unclosed handles/connections, uncleared timers/intervals, orphaned subscriptions or listeners, unhandled promise
+  rejections, swallowed errors
 - **Race conditions:** shared mutable state, unsynchronized async operations, stale closures over mutable values
-- **Injection & output encoding:** XSS (`dangerouslySetInnerHTML`, unsanitized DOM input), `eval()`/`new Function()`, SQL/command injection, path traversal, SSRF, unvalidated URL redirects
-- **Secrets & crypto:** hardcoded credentials in code/config/client bundles, insecure client-side storage, TLS/crypto misconfiguration, missing CSRF protections
+- **Injection & output encoding:** XSS (`dangerouslySetInnerHTML`, unsanitized DOM input), `eval()`/`new Function()`, SQL/command injection, path
+  traversal, SSRF, unvalidated URL redirects
+- **Secrets & crypto:** hardcoded credentials in code/config/client bundles, insecure client-side storage, TLS/crypto misconfiguration, missing CSRF
+  protections
 
-Use LSP Context (if provided) to verify type signatures, reference counts, and blast radius rather than inferring from raw text. Focus on real bugs and vulnerabilities introduced or worsened by this PR. Ignore style, naming, formatting, and pre-existing issues.
+Use LSP Context (if provided) to verify type signatures, reference counts, and blast radius rather than inferring from raw text. Focus on real bugs
+and vulnerabilities introduced or worsened by this PR. Ignore style, naming, formatting, and pre-existing issues.
 
 **Mandate B — Scoped briefing and routing decision:**
 
 After producing findings, append a `## Briefing` section:
 
-- **Tech stack:** detected languages and frameworks from file extensions and imports. Classify as one of: `frontend-only`, `backend-only`, or `mixed`. This determines which agents launch in Phase 2.
+- **Tech stack:** detected languages and frameworks from file extensions and imports. Classify as one of: `frontend-only`, `backend-only`, or `mixed`.
+  This determines which agents launch in Phase 2.
 - **Summary:** 2-3 sentences on what the PR does and its stated intent
-- **High-risk areas:** files or code paths with the most complexity or change density. Incorporate LSP `incomingCalls` data when available (e.g., "this function is called from 12 places").
+- **High-risk areas:** files or code paths with the most complexity or change density. Incorporate LSP `incomingCalls` data when available (e.g.,
+  "this function is called from 12 places").
 - **Performance concerns:** unnecessary re-renders, missing memoization, expensive operations in hot paths, bundle size impact from new dependencies
 - **Test review hints:** areas where test coverage seems thin or edge cases matter most
 - **Alignment hints:** concerns about scope creep, missing pieces, or potential breaking changes
@@ -112,23 +123,27 @@ The Briefing section is always required, even if Findings says "No issues found.
 
 #### 2b. Phase 2 — Scoped reviews (Sonnet, parallel)
 
-After Phase 1 completes, read the **Tech stack** field from the briefing and launch the appropriate agents in a **single message** with `model: "sonnet"`. Each receives the full diff, full file contents, the lead agent's **Briefing** section (not its findings), relevant project conventions from Step 1, and its mandate.
+After Phase 1 completes, read the **Tech stack** field from the briefing and launch the appropriate agents in a **single message** with
+`model: "sonnet"`. Each receives the full diff, full file contents, the lead agent's **Briefing** section (not its findings), relevant project
+conventions from Step 1, and its mandate.
 
 **Routing:**
 
-| Tech stack | Agents launched |
-|---|---|
-| `frontend-only` | Agent A-Frontend + Agent B |
-| `backend-only` | Agent A-Backend + Agent B |
-| `mixed` | Agent A-Frontend + Agent A-Backend + Agent B + Agent C |
+| Tech stack      | Agents launched                                        |
+| --------------- | ------------------------------------------------------ |
+| `frontend-only` | Agent A-Frontend + Agent B                             |
+| `backend-only`  | Agent A-Backend + Agent B                              |
+| `mixed`         | Agent A-Frontend + Agent A-Backend + Agent B + Agent C |
 
 ##### Agent A-Frontend — Test Quality (Frontend)
 
 Review test files for frontend (TypeScript/React/JS) code changes. Use the lead agent's **Test review hints** to prioritize.
 
-- **Ineffective tests:** tests that don't exercise changed code paths, would pass if the feature were broken, or only assert non-null/non-undefined without verifying behavior
+- **Ineffective tests:** tests that don't exercise changed code paths, would pass if the feature were broken, or only assert non-null/non-undefined
+  without verifying behavior
 - **Missing edge case coverage** for new functionality
-- **Component testing:** components not tested for rendering, interactions, and edge states (loading, error, empty); tests coupled to implementation details instead of observable behavior
+- **Component testing:** components not tested for rendering, interactions, and edge states (loading, error, empty); tests coupled to implementation
+  details instead of observable behavior
 - **Low-value or missing assertions:** overly broad snapshot tests, missing accessibility assertions (roles, labels, focus management)
 - **Mock realism:** API/service mocks that don't match actual contracts or realistic conditions
 - **Project conventions:** adherence to existing test patterns, CLAUDE.md standards, and project documentation
@@ -137,9 +152,11 @@ Review test files for frontend (TypeScript/React/JS) code changes. Use the lead 
 
 Review test files for backend (Go/Python/Java/etc.) code changes. Use the lead agent's **Test review hints** to prioritize.
 
-- **Ineffective tests:** tests that don't exercise changed code paths, would pass if the feature were broken, or only assert err == nil without verifying behavior
+- **Ineffective tests:** tests that don't exercise changed code paths, would pass if the feature were broken, or only assert err == nil without
+  verifying behavior
 - **Missing edge case coverage** for new functionality
-- **Integration tests:** critical paths tested against real dependencies (databases, APIs) rather than only mocks; test fixtures that reflect production data shapes
+- **Integration tests:** critical paths tested against real dependencies (databases, APIs) rather than only mocks; test fixtures that reflect
+  production data shapes
 - **Table-driven tests:** parameterized tests for functions with multiple input/output combinations rather than duplicated test bodies
 - **Error path coverage:** error conditions, timeouts, retries, and graceful degradation tested, not just the happy path
 - **Project conventions:** adherence to existing test patterns, CLAUDE.md standards, and project documentation
@@ -149,7 +166,8 @@ Review test files for backend (Go/Python/Java/etc.) code changes. Use the lead a
 Review the PR holistically against its stated purpose. Use the lead agent's **Alignment hints** and **Summary** for context.
 
 - **Scope and intent match:** does the implementation match the PR title, description, and linked issues without unrelated changes or missing pieces?
-- **Breaking changes:** removed/renamed public APIs, exported functions, interfaces, component props (new required props, changed types), or config fields (YAML, JSON, Helm, CRDs, package.json, tsconfig) without migration path
+- **Breaking changes:** removed/renamed public APIs, exported functions, interfaces, component props (new required props, changed types), or config
+  fields (YAML, JSON, Helm, CRDs, package.json, tsconfig) without migration path
 - **API version changes** and their implications for existing consumers
 - **Accessibility regressions:** removed aria attributes, broken keyboard navigation, missing focus management
 - **Undocumented behavior changes:** silent UX/behavior regressions or changes not called out in the PR description
@@ -161,8 +179,10 @@ Review the PR holistically against its stated purpose. Use the lead agent's **Al
 Only launched when Tech stack is `mixed`. Review whether frontend and backend changes are consistent with each other.
 
 - **API contract alignment:** do request/response shapes, field names, types, and status codes match between backend handlers and frontend API calls?
-- **Shared types/schemas:** if the project has shared type definitions (OpenAPI, protobuf, GraphQL, shared TS types), are they updated and do both sides conform?
-- **Error handling consistency:** do frontend components handle all error codes/shapes the backend can return? Are new backend error cases surfaced in the UI?
+- **Shared types/schemas:** if the project has shared type definitions (OpenAPI, protobuf, GraphQL, shared TS types), are they updated and do both
+  sides conform?
+- **Error handling consistency:** do frontend components handle all error codes/shapes the backend can return? Are new backend error cases surfaced in
+  the UI?
 - **Feature flag parity:** if a feature is gated on one side, is it gated on the other?
 - **Deployment ordering:** would deploying backend before frontend (or vice versa) break anything? Flag changes that require coordinated deployment.
 

@@ -49,3 +49,28 @@ check: $(DPRINT)
 
 clean:
 	rm -rf $(BIN_DIR)
+
+reset-projects:
+	@echo "Resetting all submodules to their base branch..."
+	@git submodule foreach '\
+		base_branch=$$(git config -f "$$toplevel/.gitmodules" "submodule.$$name.branch" 2>/dev/null); \
+		: "$${base_branch:=main}"; \
+		sm_url=$$(git config -f "$$toplevel/.gitmodules" "submodule.$$name.url"); \
+		base_remote=""; \
+		for r in $$(git remote); do \
+			r_url=$$(git remote get-url "$$r" 2>/dev/null); \
+			if [ "$$r_url" = "$$sm_url" ] || [ "$$r_url" = "$${sm_url}.git" ] || [ "$${r_url%.git}" = "$${sm_url%.git}" ]; then \
+				base_remote="$$r"; \
+				break; \
+			fi; \
+		done; \
+		: "$${base_remote:=origin}"; \
+		echo "  -> resetting to $$base_remote/$$base_branch"; \
+		git reset --hard --quiet; \
+		git clean -xfd --quiet; \
+		git fetch "$$base_remote" "$$base_branch" --quiet; \
+		git checkout -B "$$base_branch" "$$base_remote/$$base_branch" --quiet; \
+		for br in $$(git branch --list | grep -v "^[* ] $$base_branch$$"); do \
+			git branch -D "$$br" 2>/dev/null; \
+		done; \
+	'

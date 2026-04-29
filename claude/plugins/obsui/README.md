@@ -78,7 +78,8 @@ claude
 /obsui:code-reviewer 123
 ```
 
-This ensures the skill reads files directly from disk instead of downloading them, and LSP servers can resolve types and references against the full project.
+This ensures the skill reads files directly from disk instead of downloading them, and LSP servers can resolve types and references against the full
+project.
 
 ### Quick review (without checkout)
 

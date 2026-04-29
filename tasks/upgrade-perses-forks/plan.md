@@ -1,4 +1,4 @@
-# Work Plan: Upgrade Perses and Perses-Operator Forks for COO 1.5.0
+# Plan: Upgrade Perses and Perses-Operator Forks for COO 1.5.0
 
 ## Problem
 

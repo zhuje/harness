@@ -7,16 +7,15 @@ for using AI coding agents across the team's project portfolio.
 
 Each task follows a three-document workflow:
 
-1. **`description.md`** - Problem statement, related projects/branches, and acceptance criteria.
-2. **`work-plan.md`** - Step-by-step breakdown an AI agent can execute against.
+1. **`spec.md`** - Problem statement, related projects/branches, and acceptance criteria.
+2. **`plan.md`** - Step-by-step breakdown an AI agent can execute against.
 3. **`execution.md`** - Progress tracking with checkboxes and notes captured during execution.
 
-Tasks live in `tasks/` while active and move to `completed/` when done. The `projects/` directory contains git submodules for every repo in scope,
-giving agents direct access to source code.
+Tasks live in `tasks/`. The `projects/` directory contains git submodules for every repo in scope, giving agents direct access to source code.
 
 ## Projects
 
-See [PROJECTS.md](PROJECTS.md) for the full list of repositories in scope.
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the full project catalog and system architecture.
 
 ## Repository layout
 

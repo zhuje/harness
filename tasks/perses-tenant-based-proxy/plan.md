@@ -1,4 +1,4 @@
-# Work Plan: Variable Interpolation for Datasource Proxy Headers and Query Parameters
+# Plan: Variable Interpolation for Datasource Proxy Headers and Query Parameters
 
 ## Problem
 

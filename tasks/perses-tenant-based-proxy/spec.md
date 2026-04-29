@@ -1,4 +1,4 @@
-# Task
+# Spec: Support tenant-based proxy in Perses datasource proxy
 
 ## Related projects and branches
 
