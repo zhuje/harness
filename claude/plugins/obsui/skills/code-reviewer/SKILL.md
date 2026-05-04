@@ -4,17 +4,24 @@ description: Code review a PR using parallel agents for multi-angle analysis
 allowed-tools: Bash(gh pr view:*), Bash(gh pr diff:*), Bash(gh api:*), Bash(gh pr list:*), Bash(git log:*), Bash(git blame:*)
 ---
 
-Review a pull request from multiple angles using parallel agents.
+Review a pull request or local commits from multiple angles using parallel agents.
 
 ## Input
 
-$ARGUMENTS should be a PR number or GitHub PR URL. Extract the PR number from the URL if needed.
+$ARGUMENTS should be a PR number, GitHub PR URL or number of commits from HEAD to review locally. Extract the PR number from the URL if needed.
+
+Examples:
+
+- `/code-reviewer review the PR 345`
+- `/code-reviewer review the changes from the last 5 commits`
 
 ## Steps
 
-### 1. Gather PR context
+### 1. Gather PR or local changes context
 
 Run these commands and store the results for agent prompts:
+
+#### For PR
 
 ```bash
 # Get PR metadata (title, body, files, base branch)
@@ -24,8 +31,17 @@ gh pr view <PR_NUMBER> --json title,body,baseRefName,headRefName,commits,files,a
 gh pr diff <PR_NUMBER>
 ```
 
-Read the full contents of every file listed in the `files` array from the PR metadata. These file contents, together with the diff, form the review
-corpus.
+#### For Local
+
+```bash
+# Get the last N commits from HEAD
+git log -n <N> --pretty=format:"%H%n%s%n%b%n"   
+# Get the diff for those commits
+git diff HEAD~<N> HEAD
+```
+
+Read the full contents of every file listed in the `files` array from the PR or local commits metadata. These file contents, together with the diff,
+form the review corpus.
 
 Also read the following project config files if they exist (do not fail if missing):
 
@@ -170,6 +186,9 @@ Review the PR holistically against its stated purpose. Use the lead agent's **Al
   fields (YAML, JSON, Helm, CRDs, package.json, tsconfig) without migration path
 - **API version changes** and their implications for existing consumers
 - **Accessibility regressions:** removed aria attributes, broken keyboard navigation, missing focus management
+- **Performance regressions:** new expensive operations in hot paths, increased bundle size from dependencies, inefficient algorithms
+- **Component or modules reuses and coupling:** new code that tightly couples previously independent modules or components, making future changes
+  harder or it does not reuse existing code where it would be appropriate
 - **Undocumented behavior changes:** silent UX/behavior regressions or changes not called out in the PR description
 - **Breaking change documentation:** are breaking changes explicitly noted?
 - **New dependencies:** justified, no overlap with existing packages, compatible licenses, reasonable bundle size impact

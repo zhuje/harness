@@ -69,8 +69,6 @@ reset-projects:
 		git reset --hard --quiet; \
 		git clean -xfd --quiet; \
 		git fetch "$$base_remote" "$$base_branch" --quiet; \
-		git checkout -B "$$base_branch" "$$base_remote/$$base_branch" --quiet; \
-		for br in $$(git branch --list | grep -v "^[* ] $$base_branch$$"); do \
-			git branch -D "$$br" 2>/dev/null; \
-		done; \
+		git checkout -B "$$base_branch" "$$base_remote/$$base_branch" --quiet;
+	git submodule update --init --recursive
 	'
