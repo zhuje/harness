@@ -69,6 +69,6 @@ reset-projects:
 		git reset --hard --quiet; \
 		git clean -xfd --quiet; \
 		git fetch "$$base_remote" "$$base_branch" --quiet; \
-		git checkout -B "$$base_branch" "$$base_remote/$$base_branch" --quiet;
-	git submodule update --init --recursive
-	'
+		git checkout -B "$$base_branch" "$$base_remote/$$base_branch" --quiet \
+		'
+	@git submodule update --init --recursive;
