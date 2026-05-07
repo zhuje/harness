@@ -206,7 +206,7 @@ Save the plan as `tasks/$ARGUMENTS/plan.md`.
 
 [End-to-end verification mapped to the spec's acceptance criteria.]
 
-- [ ] [Acceptance criterion] - [how to verify]
+- [Acceptance criterion] - [how to verify]
 - ...
 
 ## Risks

@@ -67,8 +67,9 @@ grep -r "jest\|vitest\|mocha\|testing\|go test" projects/<project>/package.json 
 Record per project:
 
 - **Test file naming**: `*.test.ts`, `*.spec.ts`, `*_test.go`, etc.
-- **Test file location**: colocated with source, or in a separate `__tests__`/`test`/`tests` directory
-- **Test runner command**: `npm test`, `go test ./...`, `make test`, etc.
+- **Test file location**: colocated with source, or in a separate `__tests__`/`test`/`tests` directory.
+- **Test runner command**: `npm test`, `go test ./...`, `make test`, prefer commands included in the project rather than executing test files
+  directly.
 - **Test framework**: Jest, Vitest, Go testing, etc.
 
 This information is pasted into agent prompts so agents follow the project's conventions when writing tests.
@@ -225,8 +226,8 @@ Verify all prerequisite phases are marked complete in execution.md. If not, skip
 **b. Determine execution mode**
 
 - **Direct execution**: Phase touches 1-2 files in one repo, changes are mechanical (config values, version bumps, import updates). Execute the
-  changes yourself without dispatching an agent. Always `cd` into `projects/<project>/` and create/checkout the feature branch
-  (`feat/<feature-name>`) there before making changes. Never create feature branches from the repository root.
+  changes yourself without dispatching an agent. Always `cd` into `projects/<project>/` and create/checkout the feature branch (`feat/<feature-name>`)
+  there before making changes. Never create feature branches from the repository root.
 - **Single agent**: Phase is complex but self-contained to one repo (API type changes, refactoring, new implementation). Dispatch one agent.
 - **Parallel agents**: Two or more phases are annotated as parallelizable and touch different repos or non-overlapping files. Dispatch agents in a
   single message with multiple Agent tool calls so they run concurrently.
@@ -240,7 +241,7 @@ Each agent gets a self-contained prompt — do not make agents read plan.md. Pas
 
 **For `implementation` phases** (TDD required):
 
-```
+````
 ## Task: Phase N - [Phase Name]
 
 ## What to do
@@ -268,11 +269,13 @@ cd into the submodule directory and create the feature branch before doing anyth
 ```bash
 cd projects/<project>
 git checkout -b feat/<feature-name>
-```
+````
 
-Branch names must follow the convention `feat/<feature-name>` (e.g., `feat/add-tls-config`, `feat/update-alert-routing`). Derive `<feature-name>` from the plan title or phase description, using lowercase kebab-case.
+Branch names must follow the convention `feat/<feature-name>` (e.g., `feat/add-tls-config`, `feat/update-alert-routing`). Derive `<feature-name>` from
+the plan title or phase description, using lowercase kebab-case.
 
-All subsequent commands must run from inside `projects/<project>/`. Do NOT run git commands from the repository root — that would create the branch on the parent repo, not the submodule.
+All subsequent commands must run from inside `projects/<project>/`. Do NOT run git commands from the repository root — that would create the branch on
+the parent repo, not the submodule.
 
 ## Development method: TDD (mandatory)
 
@@ -283,7 +286,8 @@ All subsequent commands must run from inside `projects/<project>/`. Do NOT run g
 - **Test runner:** [e.g., `npm test` | `npx vitest` | `go test ./...` | `make test`]
 - **Test framework:** [e.g., Jest | Vitest | Go testing]
 
-Follow these conventions exactly. Before writing any test, find an existing test in this project and match its style (imports, assertions, setup/teardown patterns, naming).
+Follow these conventions exactly. Before writing any test, find an existing test in this project and match its style (imports, assertions,
+setup/teardown patterns, naming).
 
 ### Red-Green-Refactor cycle
 
@@ -294,6 +298,7 @@ Follow for every behavioral change:
 3. **REFACTOR** — Clean up duplication or naming. Keep tests green.
 
 Rules:
+
 - No production code without a failing test first
 - One behavior per test, clear test name
 - Use real code, not mocks (unless dependency is unavoidable — e.g., external API)
@@ -301,6 +306,7 @@ Rules:
 - If you wrote code before the test, delete it and start over
 
 For each change in the Files Modified table, the cycle is:
+
 1. Write test(s) for the new/changed behavior
 2. Run tests — confirm RED (failing for the right reason)
 3. Implement the change
@@ -316,22 +322,23 @@ For each change in the Files Modified table, the cycle is:
 
 ## Verification
 
-[Paste the Phase N Verification items from the plan]
+[Paste the Phase N Verification items from the plan including a checkbox for each]
 
 ## Report format
 
 When done, report:
+
 - **Status:** DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED
 - **Files changed:** list each file with a brief description of the change
 - **Tests written:** list each new test with its name and what behavior it verifies
 - **TDD evidence:** for each test, confirm you saw RED before GREEN
 - **Verification results:** exact command output for each verification item
 - **Issues:** any unexpected issues, decisions made, or deviations from the plan
-```
 
+```
 **For `configuration` and `investigation` phases** (no TDD):
-
 ```
+
 ## Task: Phase N - [Phase Name]
 
 ## What to do
@@ -340,17 +347,15 @@ When done, report:
 
 ## Files to modify
 
-| File | Change |
-| ---- | ------ |
+| File                       | Change                         |
+| -------------------------- | ------------------------------ |
 | `project/path/to/file.ext` | [Change description from plan] |
 
 ## Context
 
-Working directory: projects/<project>/
-Branch: <branch name>
+Working directory: projects/<project>/ Branch: <branch name>
 
-[Paste relevant CLAUDE.md/AGENTS.md content for this project]
-[Paste ARCHITECTURE.md excerpts if cross-repo awareness is needed]
+[Paste relevant CLAUDE.md/AGENTS.md content for this project] [Paste ARCHITECTURE.md excerpts if cross-repo awareness is needed]
 
 ## Setup (run first)
 
@@ -361,9 +366,11 @@ cd projects/<project>
 git checkout -b feat/<feature-name>
 ```
 
-Branch names must follow the convention `feat/<feature-name>` (e.g., `feat/add-tls-config`, `feat/update-alert-routing`). Derive `<feature-name>` from the plan title or phase description, using lowercase kebab-case.
+Branch names must follow the convention `feat/<feature-name>` (e.g., `feat/add-tls-config`, `feat/update-alert-routing`). Derive `<feature-name>` from
+the plan title or phase description, using lowercase kebab-case.
 
-All subsequent commands must run from inside `projects/<project>/`. Do NOT run git commands from the repository root — that would create the branch on the parent repo, not the submodule.
+All subsequent commands must run from inside `projects/<project>/`. Do NOT run git commands from the repository root — that would create the branch on
+the parent repo, not the submodule.
 
 ## Constraints
 
@@ -379,12 +386,13 @@ All subsequent commands must run from inside `projects/<project>/`. Do NOT run g
 ## Report format
 
 When done, report:
+
 - **Status:** DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED
 - **Files changed:** list each file with a brief description of the change
 - **Verification results:** exact command output for each verification item
 - **Issues:** any unexpected issues, decisions made, or deviations from the plan
-```
 
+```
 **d. Handle agent status**
 
 - `DONE` → run verification (Step 5), mark checkboxes in execution.md, annotate results, proceed
@@ -396,14 +404,14 @@ When done, report:
 **e. Annotate results inline**
 
 After each checkbox item completes, annotate the result in execution.md:
-
 ```
+
 - [x] Check latest release tag on perses/perses -- **v0.53.1**
 - [x] Run go build ./... -- **passes**
 - [x] Investigate whether label filtering affects TLS -- **NO, not needed**
 - [ ] Deploy on test cluster -- [HUMAN]
-```
 
+```
 **f. Handle human-action phases**
 
 For phases that require actions Claude cannot perform (pushing to remotes, deploying to clusters, running CI pipelines), present what needs to happen
@@ -428,27 +436,15 @@ After each phase completes (whether executed directly or by an agent):
 ### 6. Handle failures
 
 **Decision tree:**
-
-```
-Failure
-├── Build/compilation error
-│   ├── Read error output, identify cause
-│   ├── Attempt fix
-│   ├── Re-run verification
-│   └── If fix fails after 2 attempts → stop, present error to user
-├── Test failure
-│   ├── Read test output
-│   ├── Determine: real bug or test needs updating?
-│   ├── Attempt fix (max 2 attempts)
-│   └── If unresolved → stop, present to user
-├── Dependency/environment issue (missing tools, network, permissions)
-│   └── Stop, present to user
-└── Plan is wrong (assumption invalid, approach doesn't work)
-    ├── Stop, explain what's wrong
-    ├── Mark in execution.md: **BLOCKED:** [reason]
-    └── Suggest plan amendment to user
 ```
 
+Failure ├── Build/compilation error │ ├── Read error output, identify cause │ ├── Attempt fix │ ├── Re-run verification │ └── If fix fails after 2
+attempts → stop, present error to user ├── Test failure │ ├── Read test output │ ├── Determine: real bug or test needs updating? │ ├── Attempt fix
+(max 2 attempts) │ └── If unresolved → stop, present to user ├── Dependency/environment issue (missing tools, network, permissions) │ └── Stop,
+present to user └── Plan is wrong (assumption invalid, approach doesn't work) ├── Stop, explain what's wrong ├── Mark in execution.md: **BLOCKED:**
+[reason] └── Suggest plan amendment to user
+
+```
 **Emergent phases:**
 
 When execution reveals work not anticipated in the original plan (e.g., needing to build container images before updating references):
@@ -465,8 +461,8 @@ After all phases complete:
 1. Run the end-to-end verification items from the plan's "Verification" section
 2. Cross-reference against the spec's acceptance criteria (if spec.md was loaded in Step 1)
 3. Append a summary section to execution.md:
-
 ```
+
 ---
 
 ## Summary
@@ -483,7 +479,8 @@ After all phases complete:
 - [Decisions made during execution that deviated from the plan]
 - [Issues discovered that may affect future work]
 - [Emergent phases added and why]
-```
 
+```
 4. If the plan includes a PR Strategy section, present the current git state for each project and suggest next steps (create branches, push, create
    PRs)
+```
