@@ -1,0 +1,84 @@
+[AlertManager] 
+[AlertManager] > @perses-dev/alert-manager-plugin@0.1.0 dev
+[AlertManager] > rsbuild dev
+[AlertManager] 
+[AlertManager] Rsbuild v1.7.5
+[AlertManager] 
+[AlertManager] (node:41432) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/alertmanager/rsbuild.config.ts?t=1778272791938 is not specified and it doesn't parse as CommonJS.
+[AlertManager] Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+[AlertManager] To eliminate this warning, add "type": "module" to /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/alertmanager/package.json.
+[AlertManager] (Use `node --trace-warnings ...` to show where the warning was created)
+[AlertManager] [PERSES_PLUGIN] NAME="AlertManager" PORT="3015" PROTOCOL="http"
+[AlertManager] 
+[AlertManager] Local: http://localhost:3015
+time="2026-05-08T22:39:52+02:00" level=info msg="Dev server for AlertManager detected on port 3015"
+time="2026-05-08T22:39:52+02:00" level=info msg="All dev server ports have been captured"
+time="2026-05-08T22:39:52+02:00" level=info msg="waiting for server http://localhost:3015 to be ready"
+[AlertManager] start   build started...
+[AlertManager] warn    Build warning: 
+[AlertManager] File: ../node_modules/@perses-dev/plugin-system/dist/remote/PluginRuntime.js:1:1
+[AlertManager]   ⚠ No required version specified and unable to automatically determine one. Unable to find required version for "lodash" in description file/s
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/package.json
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/node_modules/@perses-dev/plugin-system/package.json
+[AlertManager]   │ It need to be in dependencies, devDependencies or peerDependencies. file: shared module lodash
+[AlertManager] 
+[AlertManager] ready   built in 1.84 s
+[AlertManager] start   building removed ../LICENSE
+[AlertManager] warn    Build warning: 
+[AlertManager] File: ../node_modules/@perses-dev/plugin-system/dist/remote/PluginRuntime.js:1:1
+[AlertManager]   ⚠ No required version specified and unable to automatically determine one. Unable to find required version for "lodash" in description file/s
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/package.json
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/node_modules/@perses-dev/plugin-system/package.json
+[AlertManager]   │ It need to be in dependencies, devDependencies or peerDependencies. file: shared module lodash
+[AlertManager] 
+[AlertManager] ready   built in 0.95 s
+time="2026-05-08T22:39:57+02:00" level=info msg="watching the plugin schema for \"AlertManager\""
+[AlertManager] start   building plugins/alert-table/AlertTablePanel.tsx
+[AlertManager] warn    Build warning: 
+[AlertManager] File: ../node_modules/@perses-dev/plugin-system/dist/remote/PluginRuntime.js:1:1
+[AlertManager]   ⚠ No required version specified and unable to automatically determine one. Unable to find required version for "lodash" in description file/s
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/package.json
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/node_modules/@perses-dev/plugin-system/package.json
+[AlertManager]   │ It need to be in dependencies, devDependencies or peerDependencies. file: shared module lodash
+[AlertManager] 
+[AlertManager] ready   built in 1.11 s
+[AlertManager] start   building src/components/ColumnsEditor.tsx
+[AlertManager] warn    Build warning: 
+[AlertManager] File: ../node_modules/@perses-dev/plugin-system/dist/remote/PluginRuntime.js:1:1
+[AlertManager]   ⚠ No required version specified and unable to automatically determine one. Unable to find required version for "lodash" in description file/s
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/package.json
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/node_modules/@perses-dev/plugin-system/package.json
+[AlertManager]   │ It need to be in dependencies, devDependencies or peerDependencies. file: shared module lodash
+[AlertManager] 
+[AlertManager] ready   built in 1.04 s
+[AlertManager] start   building src/components/ColumnsEditor.tsx
+[AlertManager] warn    Build warning: 
+[AlertManager] File: ../node_modules/@perses-dev/plugin-system/dist/remote/PluginRuntime.js:1:1
+[AlertManager]   ⚠ No required version specified and unable to automatically determine one. Unable to find required version for "lodash" in description file/s
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/package.json
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/node_modules/@perses-dev/plugin-system/package.json
+[AlertManager]   │ It need to be in dependencies, devDependencies or peerDependencies. file: shared module lodash
+[AlertManager] 
+[AlertManager] ready   built in 1.05 s
+[AlertManager] start   building src/components/ColumnsEditor.tsx
+[AlertManager] warn    Build warning: 
+[AlertManager] File: ../node_modules/@perses-dev/plugin-system/dist/remote/PluginRuntime.js:1:1
+[AlertManager]   ⚠ No required version specified and unable to automatically determine one. Unable to find required version for "lodash" in description file/s
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/package.json
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/node_modules/@perses-dev/plugin-system/package.json
+[AlertManager]   │ It need to be in dependencies, devDependencies or peerDependencies. file: shared module lodash
+[AlertManager] 
+[AlertManager] ready   built in 1.08 s
+[AlertManager] start   building src/components/ColumnsEditor.tsx
+[AlertManager] warn    Build warning: 
+[AlertManager] File: ../node_modules/@perses-dev/plugin-system/dist/remote/PluginRuntime.js:1:1
+[AlertManager]   ⚠ No required version specified and unable to automatically determine one. Unable to find required version for "lodash" in description file/s
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/package.json
+[AlertManager] ready   built in 1.03 s
+[AlertManager]   │ /Users/gbernal/Documents/projects/ai-sdlc/projects/perses-plugins/node_modules/@perses-dev/plugin-system/package.json
+[AlertManager]   │ It need to be in dependencies, devDependencies or peerDependencies. file: shared module lodash
+[AlertManager] 
+time="2026-05-08T23:03:18+02:00" level=info msg="stopping the watcher for plugin schema"
+time="2026-05-08T23:03:18+02:00" level=info msg="signal received: terminated"
+time="2026-05-08T23:03:18+02:00" level=info msg="dev server for plugin AlertManager has been killed"
+time="2026-05-08T23:03:18+02:00" level=error msg="failed to unregister the plugin \"AlertManager\" from the remote server" error="something wrong happened with the request to the API. Error: Delete \"http://localhost:8080/api/v1/plugins/dev\": dial tcp [::1]:8080: connect: connection refused"

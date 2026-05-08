@@ -1,16 +1,16 @@
 {
   "permissions": {
     "additionalDirectories": [
-      "projects/console",
-      "projects/konflux-coo",
-      "projects/logging-view-plugin",
-      "projects/monitoring-plugin",
-      "projects/observability-operator",
-      "projects/perses",
-      "projects/operator",
-      "projects/perses-plugins",
-      "projects/perses-shared",
-      "projects/perses-spec"
+      "./projects/console",
+      "./projects/konflux-coo",
+      "./projects/logging-view-plugin",
+      "./projects/monitoring-plugin",
+      "./projects/observability-operator",
+      "./projects/perses",
+      "./projects/operator",
+      "./projects/perses-plugins",
+      "./projects/perses-shared",
+      "./projects/perses-spec"
     ]
   },
   "hooks": {

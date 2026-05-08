@@ -1,0 +1,122 @@
+
+> perses-shared@0.54.0-beta.1 build
+> turbo run build
+
+turbo 2.5.8
+
+• Packages in scope: @perses-dev/components, @perses-dev/dashboards, @perses-dev/explore, @perses-dev/plugin-system
+• Running build in 4 packages
+• Remote caching disabled
+@perses-dev/plugin-system:clean: cache bypass, force executing 3669c0155cb74c6c
+@perses-dev/components:clean: cache bypass, force executing f04da20dd4980a8a
+@perses-dev/explore:clean: cache bypass, force executing 2573d7493f386ba7
+@perses-dev/dashboards:clean: cache bypass, force executing 13a3c18c030d5b83
+@perses-dev/components:clean: 
+@perses-dev/components:clean: > @perses-dev/components@0.54.0-beta.1 clean
+@perses-dev/components:clean: > rimraf dist/
+@perses-dev/components:clean: 
+@perses-dev/dashboards:clean: 
+@perses-dev/dashboards:clean: > @perses-dev/dashboards@0.54.0-beta.1 clean
+@perses-dev/dashboards:clean: > rimraf dist/
+@perses-dev/dashboards:clean: 
+@perses-dev/explore:clean: 
+@perses-dev/explore:clean: > @perses-dev/explore@0.54.0-beta.1 clean
+@perses-dev/explore:clean: > rimraf dist/
+@perses-dev/explore:clean: 
+@perses-dev/plugin-system:clean: 
+@perses-dev/plugin-system:clean: > @perses-dev/plugin-system@0.54.0-beta.1 clean
+@perses-dev/plugin-system:clean: > rimraf dist/
+@perses-dev/plugin-system:clean: 
+@perses-dev/components:build: cache hit, replaying logs 67d0e01161fe0719
+@perses-dev/components:build: 
+@perses-dev/components:build: > @perses-dev/components@0.54.0-beta.1 build
+@perses-dev/components:build: > concurrently "npm:build:*"
+@perses-dev/components:build: 
+@perses-dev/components:build: [esm] 
+@perses-dev/components:build: [esm] > @perses-dev/components@0.54.0-beta.1 build:esm
+@perses-dev/components:build: [esm] > swc ./src -d dist --strip-leading-paths --config-file ../.swcrc
+@perses-dev/components:build: [esm] 
+@perses-dev/components:build: [cjs] 
+@perses-dev/components:build: [cjs] > @perses-dev/components@0.54.0-beta.1 build:cjs
+@perses-dev/components:build: [cjs] > swc ./src -d dist/cjs --strip-leading-paths --config-file ../.cjs.swcrc
+@perses-dev/components:build: [cjs] 
+@perses-dev/components:build: [types] 
+@perses-dev/components:build: [types] > @perses-dev/components@0.54.0-beta.1 build:types
+@perses-dev/components:build: [types] > tsc --project tsconfig.build.json
+@perses-dev/components:build: [types] 
+@perses-dev/components:build: [cjs] Successfully compiled: 183 files with swc (101.86ms)
+@perses-dev/components:build: [esm] Successfully compiled: 183 files with swc (110.47ms)
+@perses-dev/components:build: [cjs] npm run build:cjs exited with code 0
+@perses-dev/components:build: [esm] npm run build:esm exited with code 0
+@perses-dev/components:build: [types] npm run build:types exited with code 0
+@perses-dev/plugin-system:build: cache hit, replaying logs 3eb16c5c4d826d16
+@perses-dev/plugin-system:build: 
+@perses-dev/plugin-system:build: > @perses-dev/plugin-system@0.54.0-beta.1 build
+@perses-dev/plugin-system:build: > concurrently "npm:build:*"
+@perses-dev/plugin-system:build: 
+@perses-dev/plugin-system:build: [cjs] 
+@perses-dev/plugin-system:build: [cjs] > @perses-dev/plugin-system@0.54.0-beta.1 build:cjs
+@perses-dev/plugin-system:build: [cjs] > swc ./src -d dist/cjs --strip-leading-paths --config-file ../.cjs.swcrc
+@perses-dev/plugin-system:build: [cjs] 
+@perses-dev/plugin-system:build: [types] 
+@perses-dev/plugin-system:build: [types] > @perses-dev/plugin-system@0.54.0-beta.1 build:types
+@perses-dev/plugin-system:build: [types] > tsc --project tsconfig.build.json
+@perses-dev/plugin-system:build: [types] 
+@perses-dev/plugin-system:build: [esm] 
+@perses-dev/plugin-system:build: [esm] > @perses-dev/plugin-system@0.54.0-beta.1 build:esm
+@perses-dev/plugin-system:build: [esm] > swc ./src -d dist --strip-leading-paths --config-file ../.swcrc
+@perses-dev/plugin-system:build: [esm] 
+@perses-dev/plugin-system:build: [cjs] Successfully compiled: 113 files with swc (69.44ms)
+@perses-dev/plugin-system:build: [cjs] npm run build:cjs exited with code 0
+@perses-dev/plugin-system:build: [esm] Successfully compiled: 113 files with swc (85.24ms)
+@perses-dev/plugin-system:build: [esm] npm run build:esm exited with code 0
+@perses-dev/plugin-system:build: [types] npm run build:types exited with code 0
+@perses-dev/dashboards:build: cache hit, replaying logs 3de905b01324c93f
+@perses-dev/dashboards:build: 
+@perses-dev/dashboards:build: > @perses-dev/dashboards@0.54.0-beta.1 build
+@perses-dev/dashboards:build: > concurrently "npm:build:*"
+@perses-dev/dashboards:build: 
+@perses-dev/dashboards:build: [cjs] 
+@perses-dev/dashboards:build: [cjs] > @perses-dev/dashboards@0.54.0-beta.1 build:cjs
+@perses-dev/dashboards:build: [cjs] > swc ./src -d dist/cjs --strip-leading-paths --config-file ../.cjs.swcrc
+@perses-dev/dashboards:build: [cjs] 
+@perses-dev/dashboards:build: [types] 
+@perses-dev/dashboards:build: [types] > @perses-dev/dashboards@0.54.0-beta.1 build:types
+@perses-dev/dashboards:build: [types] > tsc --project tsconfig.build.json
+@perses-dev/dashboards:build: [types] 
+@perses-dev/dashboards:build: [esm] 
+@perses-dev/dashboards:build: [esm] > @perses-dev/dashboards@0.54.0-beta.1 build:esm
+@perses-dev/dashboards:build: [esm] > swc ./src -d dist --strip-leading-paths --config-file ../.swcrc
+@perses-dev/dashboards:build: [esm] 
+@perses-dev/dashboards:build: [esm] Successfully compiled: 139 files with swc (103.31ms)
+@perses-dev/dashboards:build: [cjs] Successfully compiled: 139 files with swc (106.8ms)
+@perses-dev/dashboards:build: [esm] npm run build:esm exited with code 0
+@perses-dev/dashboards:build: [cjs] npm run build:cjs exited with code 0
+@perses-dev/dashboards:build: [types] npm run build:types exited with code 0
+@perses-dev/explore:build: cache hit, replaying logs 35eb25d5a50499ad
+@perses-dev/explore:build: 
+@perses-dev/explore:build: > @perses-dev/explore@0.54.0-beta.1 build
+@perses-dev/explore:build: > concurrently "npm:build:*"
+@perses-dev/explore:build: 
+@perses-dev/explore:build: [esm] 
+@perses-dev/explore:build: [esm] > @perses-dev/explore@0.54.0-beta.1 build:esm
+@perses-dev/explore:build: [esm] > swc ./src -d dist --strip-leading-paths --config-file ../.swcrc
+@perses-dev/explore:build: [esm] 
+@perses-dev/explore:build: [types] 
+@perses-dev/explore:build: [types] > @perses-dev/explore@0.54.0-beta.1 build:types
+@perses-dev/explore:build: [types] > tsc --project tsconfig.build.json
+@perses-dev/explore:build: [types] 
+@perses-dev/explore:build: [cjs] 
+@perses-dev/explore:build: [cjs] > @perses-dev/explore@0.54.0-beta.1 build:cjs
+@perses-dev/explore:build: [cjs] > swc ./src -d dist/cjs --strip-leading-paths --config-file ../.cjs.swcrc
+@perses-dev/explore:build: [cjs] 
+@perses-dev/explore:build: [cjs] Successfully compiled: 14 files with swc (42.51ms)
+@perses-dev/explore:build: [esm] Successfully compiled: 14 files with swc (47.9ms)
+@perses-dev/explore:build: [cjs] npm run build:cjs exited with code 0
+@perses-dev/explore:build: [esm] npm run build:esm exited with code 0
+@perses-dev/explore:build: [types] npm run build:types exited with code 0
+
+ Tasks:    8 successful, 8 total
+Cached:    4 cached, 8 total
+  Time:    596ms 
+

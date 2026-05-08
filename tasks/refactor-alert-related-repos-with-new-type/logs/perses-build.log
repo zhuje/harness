@@ -1,0 +1,32 @@
+>> Compress assets
+scripts/compress_assets.sh
+>> Install default plugins
+go run ./scripts/plugin/install_plugin.go
+Downloading plugin BarChart
+Downloading plugin VictoriaLogs
+Downloading plugin ClickHouse
+Downloading plugin DatasourceVariable
+Downloading plugin FlameChart
+Downloading plugin GaugeChart
+Downloading plugin HistogramChart
+Downloading plugin HeatMapChart
+Downloading plugin LogsTable
+Downloading plugin Loki
+Downloading plugin Markdown
+Downloading plugin PieChart
+Downloading plugin Prometheus
+Downloading plugin Pyroscope
+Downloading plugin ScatterChart
+Downloading plugin StatChart
+Downloading plugin StaticListVariable
+Downloading plugin StatusHistoryChart
+Downloading plugin Table
+Downloading plugin Tempo
+Downloading plugin TimeSeriesChart
+Downloading plugin TimeSeriesTable
+Downloading plugin TraceTable
+Downloading plugin TracingGanttChart
+All plugins successfully installed.
+GOARCH=arm64 GOOS=darwin go generate ./internal/api
+>> Build the Perses API
+CGO_ENABLED=0 GOARCH=arm64 GOOS=darwin go build -ldflags "-s -w -X github.com/prometheus/common/version.Version=0.53.1 -X github.com/prometheus/common/version.Revision=58d70b73109ce46e15f2f8ad0ffc604e106ae1cb -X github.com/prometheus/common/version.BuildDate=2026-05-08 -X github.com/prometheus/common/version.Branch=feat/alert-manager-plugin" -o ./bin/perses ./cmd/perses

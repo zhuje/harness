@@ -1,12 +1,25 @@
 ---
 name: planner
 description: Create an implementation plan for a given spec, breaking it down into phases with file tables, code details, parallel execution annotations, verification, and risk analysis.
-allowed-tools: Read, Bash(find:*), Bash(grep:*), Bash(rg:*), Bash(git log:*), Bash(git diff:*), Bash(git show:*), Bash(git branch:*), Bash(wc:*), Bash(ls:*), LSP, Agent
+allowed-tools: Read, Bash(find:*), Bash(grep:*), Bash(rg:*), Bash(git log:*), Bash(git diff:*), Bash(git show:*), Bash(git branch:*), Bash(git -C:*), Bash(wc:*), Bash(ls:*), LSP, Agent
 ---
 
 ## Input
 
 $ARGUMENTS is a task folder name. The folder must exist under `tasks/` and contain a `spec.md` file.
+
+## Prerequisites
+
+The projects referenced in the spec live as git submodules under `projects/`. The repository's `.claude/settings.json` already includes
+`additionalDirectories` for the project submodules, so file reads and bash commands against those paths will not trigger permission prompts.
+
+**Path rules — ALWAYS use relative paths from the repo root:**
+
+- File reads: `projects/<project>/path/to/file` (relative, no leading `./`)
+- Bash find/grep/ls: `./projects/<project>/...`
+- Git commands in submodules: `git -C ./projects/<project> <command>` (e.g., `git -C ./projects/perses log --oneline -5`)
+- NEVER use absolute paths or `cd /absolute/path && git ...` — these trigger permission prompts for untrusted hooks
+- The permission allowlist matches `cd ./projects/* && git *`, so if you must use `cd`, always use the relative form: `cd ./projects/<project> && git ...`
 
 ## Steps
 
@@ -19,13 +32,21 @@ tasks/$ARGUMENTS/spec.md
 ARCHITECTURE.md
 ```
 
-For each project listed in the spec's "Related projects and branches" section, also read if they exist:
+For each project listed in the spec's "Related projects and branches" section:
 
+1. Check the current branch and recent commits:
+
+```bash
+git -C ./projects/<project> branch --show-current && echo "---" && git -C ./projects/<project> log --oneline -5
 ```
-projects/<project>/CLAUDE.md
-projects/<project>/AGENTS.md
-projects/<project>/README.md
-```
+
+2. Use the Read tool with relative paths to read these files if they exist:
+
+- `projects/<project>/CLAUDE.md`
+- `projects/<project>/AGENTS.md`
+- `projects/<project>/README.md`
+
+Run all project checks and reads in parallel across projects to minimize round-trips.
 
 After reading, identify:
 
@@ -44,12 +65,12 @@ answers are obvious from the spec.
 
 Good questions target:
 
-- **Ambiguous acceptance criteria** - "The spec says 'updated to match the latest versions.' Does that mean the latest release tag, or tip of main?"
-- **Scope boundaries** - "Should this include updating the CI pipelines, or only the source code?"
-- **Ordering constraints** - "Do these PRs need to merge in a specific order, or can they be reviewed in parallel?"
-- **Risk areas the spec does not mention** - "The operator embeds this via Go modules. Are there known type incompatibilities?"
-- **Target branches and release alignment** - "Which release branch should the changes target?"
-- **Testing expectations** - "Is a test cluster available for e2e verification, or should the plan stop at unit tests?"
+- **Ambiguous acceptance criteria** (e.g., "latest versions" — release tag or tip of main?)
+- **Scope boundaries** (e.g., CI pipelines in scope or only source code?)
+- **Ordering constraints** (e.g., PRs merge in order or reviewed in parallel?)
+- **Risk areas the spec doesn't mention** (e.g., Go module type incompatibilities?)
+- **Target branches and release alignment**
+- **Testing expectations** (e.g., test cluster available or stop at unit tests?)
 
 Use AskUserQuestion for questions with clear options (scope, ordering, yes/no decisions). Use a numbered list for open-ended questions (risk areas,
 testing expectations, design trade-offs).
@@ -91,7 +112,7 @@ being modified.
 
 ```bash
 grep -rn "import.*module" projects/<project>/
-git log --oneline -10 projects/<project>/path/to/file
+git -C ./projects/<project> log --oneline -10 -- path/to/file
 ```
 
 **Similar implementations** (patterns to follow):
@@ -128,13 +149,10 @@ at a time. Phases touching different repos or non-overlapping files can run in p
 
 Before saving, verify the plan against the spec:
 
-1. **Acceptance criteria coverage** - for each criterion in the spec, identify which phase/task addresses it. If any criterion is not covered, add a
-   phase or task.
-2. **Dependency ordering** - verify that phases reference their dependencies correctly and no phase uses output from a later phase.
-3. **File path accuracy** - confirm that every file path in the plan exists in the codebase (or is explicitly marked as a new file to create).
-4. **Verification completeness** - the Verification section should cover every acceptance criterion, not just the easy-to-test ones.
-5. **Parallelism validity** - confirm that phases marked as parallel do not modify overlapping files.
-6. **Component reuse** — for each new component, function or module verify it's placed in the right directory given its consumers across all phases
+1. **Acceptance criteria coverage** — every spec criterion is addressed by a phase/task; Verification section covers all criteria, not just easy ones
+2. **Dependency ordering and parallelism** — phases reference correct dependencies, no phase uses output from a later phase, parallel phases don't modify overlapping files
+3. **File path accuracy** — every path exists in the codebase or is marked as a new file
+4. **Component reuse** — new components/functions placed in the right directory given their consumers across all phases
 
 ### 6. Save
 

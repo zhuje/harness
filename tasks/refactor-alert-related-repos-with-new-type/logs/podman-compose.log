@@ -1,0 +1,18 @@
+[4m>>>> Executing external compose provider "/usr/local/bin/docker-compose". Please see podman-compose(1) for how to disable this message. <<<<
+
+[0m Container perses-dev-prometheus-1  Creating
+ Container perses-dev-avalanche-1  Creating
+ Container perses-dev-alertmanager-1  Creating
+ Container perses-dev-avalanche-1  Created
+ Container perses-dev-prometheus-1  Created
+ Container perses-dev-alertmanager-1  Created
+ Container perses-dev-alertmanager-init-1  Creating
+ Container perses-dev-alertmanager-init-1  Created
+ Container perses-dev-prometheus-1  Starting
+ Container perses-dev-alertmanager-1  Starting
+ Container perses-dev-avalanche-1  Starting
+ Container perses-dev-alertmanager-1  Started
+ Container perses-dev-alertmanager-init-1  Starting
+ Container perses-dev-prometheus-1  Started
+ Container perses-dev-avalanche-1  Started
+ Container perses-dev-alertmanager-init-1  Started

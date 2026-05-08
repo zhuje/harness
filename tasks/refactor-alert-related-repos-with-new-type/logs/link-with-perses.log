@@ -1,0 +1,18 @@
+Linking packages to /Users/gbernal/Documents/projects/ai-sdlc/projects/perses/ui/app [perses]...
+  Linking @perses-dev/components... [0;32mdone[0m
+  Linking @perses-dev/dashboards... [0;32mdone[0m
+  Linking @perses-dev/plugin-system... [0;32mdone[0m
+  Linking @perses-dev/explore... [0;32mdone[0m
+
+Status (/Users/gbernal/Documents/projects/ai-sdlc/projects/perses/ui/app) [target: perses]:
+  [0;32m●[0m @perses-dev/components [0;32mlinked[0m
+  [0;32m●[0m @perses-dev/dashboards [0;32mlinked[0m
+  [0;32m●[0m @perses-dev/plugin-system [0;32mlinked[0m
+  [0;32m●[0m @perses-dev/explore [0;32mlinked[0m
+
+4 of 4 packages linked
+
+Now you can start the app dev server, in shared mode, from Perses:
+
+cd /Users/gbernal/Documents/projects/ai-sdlc/projects/perses/ui/app
+npm run start:shared

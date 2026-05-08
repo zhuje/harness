@@ -1,0 +1,21 @@
+
+> @perses-dev/spec@0.2.0-beta.1 build
+> concurrently "npm:build:*"
+
+[types] 
+[types] > @perses-dev/spec@0.2.0-beta.1 build:types
+[types] > tsc --project tsconfig.build.json
+[types] 
+[esm] 
+[esm] > @perses-dev/spec@0.2.0-beta.1 build:esm
+[esm] > swc ./src -d dist --strip-leading-paths --config-file ./.swcrc
+[esm] 
+[cjs] 
+[cjs] > @perses-dev/spec@0.2.0-beta.1 build:cjs
+[cjs] > swc ./src -d dist/cjs --strip-leading-paths --config-file ./.cjs.swcrc
+[cjs] 
+[cjs] Successfully compiled: 38 files with swc (64.81ms)
+[esm] Successfully compiled: 38 files with swc (64.83ms)
+[cjs] npm run build:cjs exited with code 0
+[esm] npm run build:esm exited with code 0
+[types] npm run build:types exited with code 0
