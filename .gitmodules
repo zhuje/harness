@@ -1,22 +1,22 @@
 [submodule "projects/monitoring-plugin"]
 	path = projects/monitoring-plugin
-	url = http://github.com/openshift/monitoring-plugin
+	url = https://github.com/openshift/monitoring-plugin
 	branch = main
 [submodule "projects/console"]
 	path = projects/console
-	url = http://github.com/openshift/console
+	url = https://github.com/openshift/console
 	branch = main
 [submodule "projects/logging-view-plugin"]
 	path = projects/logging-view-plugin
-	url = http://github.com/openshift/logging-view-plugin
+	url = https://github.com/openshift/logging-view-plugin
 	branch = main
 [submodule "projects/perses"]
 	path = projects/perses
-	url = http://github.com/perses/perses
+	url = https://github.com/perses/perses
 	branch = main
 [submodule "projects/perses-operator"]
 	path = projects/perses-operator
-	url = http://github.com/perses/perses-operator
+	url = https://github.com/perses/perses-operator
 	branch = main
 [submodule "projects/konflux-coo"]
 	path = projects/konflux-coo
@@ -28,13 +28,13 @@
 	branch = main
 [submodule "projects/perses-shared"]
 	path = projects/perses-shared
-	url = http://github.com/perses/shared
+	url = https://github.com/perses/shared
 	branch = main
 [submodule "projects/perses-plugins"]
 	path = projects/perses-plugins
-	url = http://github.com/perses/plugins
+	url = https://github.com/perses/plugins
 	branch = main
 [submodule "projects/perses-spec"]
 	path = projects/perses-spec
-	url = http://github.com/perses/spec
+	url = https://github.com/perses/spec
 	branch = main
