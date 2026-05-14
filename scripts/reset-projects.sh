@@ -124,6 +124,8 @@ for i in "${!pids[@]}"; do
   fi
 done
 
+git submodule update --init --recursive
+
 echo "═══════════════════════════════════════════════════════════"
 if [[ ${#errors[@]} -gt 0 ]]; then
   echo " Done with ${#errors[@]} error(s):"
