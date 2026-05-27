@@ -170,3 +170,15 @@ When planning tasks that span multiple projects, these dependency chains matter:
 Before starting work on a project, check for `CLAUDE.md` or `AGENTS.md` in the project root — several projects have detailed agent-specific guidance
 for building, testing, and navigating the codebase. Each project has its own build and test setup documented in its README. See the
 [README](README.md) for the task workflow used to plan and track work across projects.
+
+## Konflux 
+
+### Konflux - Fast Channel vs Stable Channel 
+https://github.com/rhobs/observability-operator/pull/1100
+Replace the single "stable" channel with two channels:
+
+fast: ships the latest bundle across all OCP versions (same as the previous stable behavior)
+stable: can pin different bundle versions per OCP version, controlled by config/channels.yaml
+Per-version update scripts (hack/update-bundle-*.sh) replace the single hack/update-catalog.sh, allowing Konflux component updates to target specific bundle versions independently. hack/add-bundle-version.sh automates adding new bundle versions to the template.
+
+Each OCP version now gets its own rendered catalog directory (catalog/coo-product-v4.XX/) instead of sharing two directories.
