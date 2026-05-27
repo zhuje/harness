@@ -70,8 +70,8 @@ grep -A 30 '"scripts"' ./projects/<project>/package.json 2>/dev/null
 find ./projects/<project> -type f \( -name "*.test.*" -o -name "*.spec.*" -o -name "*_test.go" \) | head -10
 ```
 
-**Command rules:** NEVER run `npx` commands directly (`npx jest`, `npx tsc`, `npx vitest`, `npx eslint`) — they trigger permission prompts. Always use
-Makefile targets or npm scripts. Go commands (`go test`, `go build`) are fine.
+**Command rules:** NEVER run `npx` commands directly — they trigger permission prompts. Always use Makefile targets or npm scripts like
+`npm run build`, `npm run test`, `npm run lint` or `npm run type-check`. Go commands (`go test`, `go build`) are fine.
 
 Record per project:
 
